@@ -1,20 +1,26 @@
+#!/usr/bin/env node
 console.log('App initialized...');
 
+const yargs = require('yargs');
 const fs = require('fs');
 const _ = require('lodash');
 const notes = require('./notes');
 
-const Command = process.argv[2];
+const { argv } = yargs;
+const command = argv._[0];
 
-switch(Command) {
+switch(command) {
     case 'add': 
-        console.log('Adding notes...')
+        notes.addNote(argv.title, argv.body);
         break;
     case 'list': 
-        console.log('Listing notes...')
+        notes.getAll();
         break;
     case 'read': 
-        console.log('Reading notes...')
+        notes.getNote(argv.title);
+        break;
+    case 'remove': 
+        notes.removeNote(argv.title);
         break;
     default: 
         console.log('Command not found...')
